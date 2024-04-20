@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicadores dos Sensores</title>
+    <style>
+        .container {
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .sensor {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        .sensor img {
+            display: block;
+            margin: auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .sensor p {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .refresh-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .refresh-button:hover {
+            background-color: #45a049;
+        }
+        #umidadeImg{
+            mix-blend-mode: multiply;
+            width: 250px;
+            height: 230px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Indicadores dos Sensores</h1>
+        
+        <div class="sensor" id="temperaturaSensor">
+            <h2>Temperatura</h2>
+            <img id="temperaturaImg" src="" alt="Imagem de temperatura">
+            <p id="temperaturaStatus"></p>
+        </div>
+
+        <div class="sensor" id="umidadeSensor">
+            <h2>Umidade</h2>
+            <img id="umidadeImg" src="umido.png" alt="Imagem de umidade">
+            <p id="umidadeStatus"></p>
+        </div>
+
+        <div class="sensor" id="distanciaSensor">
+            <h2>Distância (Volume de ração)</h2>
+            <img id="distanciaImg" src="" alt="Imagem de distância">
+            <p id="distanciaStatus"></p>
+
+        </div>
+
+
+        <button class="refresh-button" onclick="location.reload()">Atualizar</button>
+    </div>
+
+    <script>
+        function atualizarSensores() {
+            // Simulação de valores dos sensores (substitua com seus próprios valores)
+            var temperatura = 35; // Exemplo de temperatura
+            var umidade = 60; // Exemplo de umidade
+            var distancia = 10; // Exemplo de distância (volume de ração)
+
+            // Atualizar o status da temperatura
+            if (temperatura < 20) {
+                document.getElementById("temperaturaImg").src = "temperatura_baixa.jpeg";
+                document.getElementById("temperaturaStatus").textContent = "Temperatura baixa";
+            } else if (temperatura >= 20 && temperatura <= 30) {
+                document.getElementById("temperaturaImg").src = "temperatura_media.jpeg";
+                document.getElementById("temperaturaStatus").textContent = "Temperatura normal";
+            } else {
+                document.getElementById("temperaturaImg").src = "temperatura_alta.jpeg";
+                document.getElementById("temperaturaStatus").textContent = "Temperatura alta";
+            }
+
+            // Atualizar o status da umidade
+            // Aqui você pode adicionar lógica semelhante para definir a imagem e o status da umidade
+
+            // Atualizar o status da distância (volume de ração)
+            if (distancia >= 1 && distancia <= 5) {
+                document.getElementById("distanciaImg").src = "tanque_cheio.jpeg";
+                document.getElementById("distanciaStatus").textContent = "Tanque cheio";
+            } else if (distancia >= 6 && distancia <= 15) {
+                document.getElementById("distanciaImg").src = "tanque_medio.jpeg";
+                document.getElementById("distanciaStatus").textContent = "Tanque na metade";
+            } else {
+                document.getElementById("distanciaImg").src = "tanque_vazio.jpeg";
+                document.getElementById("distanciaStatus").textContent = "Tanque vazio";
+            }
+        }
+
+        // Chamar a função para atualizar os sensores ao carregar a página
+        window.onload = atualizarSensores;
+    </script>
+    <br><br><br>
+
+<a href="endereçodaotapag" target="_blank">Ir para as configurações do alimentador </a>
+</body>
+</html>

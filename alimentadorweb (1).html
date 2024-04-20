@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações</title>
+    <style>
+        select, button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        select:hover, button:hover {
+            background-color: #45a049;
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Configurações do alimentador</h1>
+        <label for="tipoPeixe">Selecione o tipo de peixe:</label>
+        <select id="tipoPeixe">
+            <option value="Tucunaré">Tucunaré</option>
+            <option value="Tilápia">Tilápia</option>
+            <option value="Pacu">Pacu</option>
+            <option value="Atum">Atum</option>
+            <option value="Traíra">Traíra</option>
+            <option value="Sardinha">Sardinha</option>
+            <option value="Salmão">Salmão</option>
+            <option value="Lambari">Lambari</option>
+            <option value="Pirarucu">Pirarucu</option>
+        </select>
+
+        <br><br>
+
+        <label for="intervalo">Selecione o intervalo de tempo (em horas):</label>
+        <select id="intervalo">
+            <option value="1">A cada 1 hora</option>
+            <option value="0.5">A cada 30 minutos</option>
+            <option value="0.25">A cada 15 minutos</option>
+            <option value="0.1666667">A cada 10 minutos</option>
+        </select>
+        
+        <br><br>
+
+        <label for="horaAgendada">Agendar a primeira alimentação:</label>
+        <select id="horaAgendada">
+            <option value="1">Daqui a 1 hora</option>
+            <option value="2">Daqui a 2 horas</option>
+            <option value="3">Daqui a 3 horas</option>
+            <option value="4">Daqui a 4 horas</option>
+        </select>
+
+        <br><br>
+
+        <label for="quantidadeRacao">Selecione a quantidade de ração (em gramas):</label>
+        <select id="quantidadeRacao">
+            <option value="5">5 gramas</option>
+            <option value="10">10 gramas</option>
+            <option value="15">15 gramas</option>
+            <option value="20">20 gramas</option>
+        </select>
+
+        <br><br>
+
+        <button class="corbotao" onclick="salvarAlteracoes()">Salvar Alterações</button>
+    
+        <p>Próxima alimentação: <span id="proximaAlimentacao"></span></p>
+        <p>Alimentações feitas:</p>
+        <ul id="alimentacoesFeitas"></ul>
+
+        <div class="info">
+            <p id="tipoPeixeSelecionado">Tipo de Peixe: <span id="tipoPeixeValor"></span></p>
+            <p id="intervaloSelecionado">Intervalo de alimentação: <span id="intervaloValor"></span> horas</p>
+            <p id="horaAgendadaSelecionada">Hora agendada para a primeira alimentação: Daqui a <span id="horaAgendadaValor"></span> horas</p>
+            <p id="quantidadeRacaoSelecionada">Quantidade de ração: <span id="quantidadeRacaoValor"></span> gramas</p>
+        </div>
+
+        <script>
+            // Preencher as especificações pré-selecionadas na tela
+            document.getElementById("tipoPeixe").value = "Tucunaré"; // Tipo de Peixe pré-selecionado
+            document.getElementById("intervalo").value = "1"; // Intervalo de tempo pré-selecionado
+            document.getElementById("horaAgendada").value = "1"; // Hora agendada pré-selecionada
+            document.getElementById("quantidadeRacao").value = "5"; // Quantidade de ração pré-selecionada
+
+            var intervaloSelecionado = 1; // Valor padrão do intervalo (1 hora)
+            var alimentacoesFeitas = []; // Array para armazenar as alimentações feitas
+            var horaAgendada = null; // Hora agendada para a primeira alimentação
+
+            function salvarAlteracoes() {
+                var tipoPeixe = document.getElementById("tipoPeixe").value;
+                var intervalo = document.getElementById("intervalo").value;
+                var horaSelecionada = document.getElementById("horaAgendada").value;
+                var quantidadeRacao = document.getElementById("quantidadeRacao").value;
+
+                console.log("Tipo de Peixe: " + tipoPeixe);
+                console.log("Intervalo de alimentação: " + intervalo + " horas");
+                console.log("Hora agendada para a primeira alimentação: Daqui a " + horaSelecionada + " horas");
+                console.log("Quantidade de ração: " + quantidadeRacao + " gramas");
+
+                // Exibir as opções selecionadas na tela
+                document.getElementById("tipoPeixeValor").textContent = tipoPeixe;
+                document.getElementById("intervaloValor").textContent = intervalo;
+                document.getElementById("horaAgendadaValor").textContent = horaSelecionada;
+                document.getElementById("quantidadeRacaoValor").textContent = quantidadeRacao;
+            }
+
+            function atualizarProximaAlimentacao() {
+                var now = new Date();
+                var proximaAlimentacao;
+                if (horaAgendada && horaAgendada > now) {
+                    proximaAlimentacao = horaAgendada;
+                } else {
+                    proximaAlimentacao = new Date(now.getTime() + intervaloSelecionado * 60 * 60 * 1000); // Calcular o próximo horário de alimentação
+                }
+                document.getElementById("proximaAlimentacao").textContent = proximaAlimentacao.toLocaleTimeString();
+            }
+
+            // Atualizar o próximo horário de alimentação a cada minuto
+            setInterval(atualizarProximaAlimentacao, 60000);
+        </script>
+    </div>
+    <br><br><br>
+    <a href="endereçodaotapag" target="_blank">Ir para sensores </a>
+</body>
+</html>
